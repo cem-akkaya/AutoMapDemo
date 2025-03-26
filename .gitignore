@@ -1,0 +1,67 @@
+﻿﻿# Do not ignore git files in the root of the repo.
+!/.git*
+
+# Do not ignore current project's `.uproject`.
+!/*.uproject
+
+#################################
+# Unreal Engine Generated Files #
+#################################
+/[Bb]uild
+/[Bb]uilds
+/Binaries
+/DerivedDataCache
+/Intermediate
+/Saved
+/Plugins/Developer
+/Content/MWLandscapeAutoMaterial
+
+#################################
+# Project Plugins #
+#################################
+
+# Plugin #
+/Plugins/AutoMap/Binaries
+/Plugins/AutoMap/Intermediate
+# /Plugin #
+
+
+# Plugin #
+/AutoMap/Binaries
+/AutoMap/Intermediate
+# /Plugin #
+
+# Plugin #
+/Binaries/
+/Intermediate/
+# /Plugin #
+
+#################################
+# Visual Studio Generated Files #
+#################################
+# Cache Directory
+.vs
+# User Specific Files
+*.rsuser
+*.suo
+*.user
+*.userosscache
+*.sln.docstates
+# CPP Cache Files
+*.VC.db
+*.opendb
+*.opensdf
+*.sdf
+# Solution Files
+*.sln
+# VSCode Cache Directory
+.vscode
+# VSCode History Files
+**/.history
+
+###################################
+# JetBrains Rider Generated Files #
+###################################
+# Cache Directory
+.idea
+
