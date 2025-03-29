@@ -12,6 +12,19 @@
 /**
  * 
  */
+
+USTRUCT(BlueprintType)
+struct FAutoMapRegionsStruct : public FTableRowBase
+{
+	GENERATED_BODY()
+
+	UPROPERTY(EditAnywhere, BlueprintReadWrite, Category="Auto Map - Locations Region")
+	FName RegionName;
+
+	UPROPERTY(EditAnywhere, BlueprintReadWrite, Category="Auto Map - Locations Region")
+	EMapLocationCategory LocationCategory;
+};
+
 UCLASS()
 class AUTOMAP_API UAutoMapSubsystem : public UEngineSubsystem
 {
@@ -39,6 +52,12 @@ public:
 	
 	UFUNCTION(BlueprintCallable, Category="Auto Map - Pins" , DisplayName="Get All Pins By Type")
 	void GetAllPins(EPinType PinType, TArray<AAutoMapPinBase*> &OutPins);
+
+	UFUNCTION(BlueprintCallable, Category="Auto Map - Pins" , DisplayName="Get Location Pins")
+	void GetLocationPins(FName LocationName, TArray<AAutoMapPinBase*> &OutPins);
+
+	UFUNCTION(BlueprintCallable, Category="Auto Map - Pins" , DisplayName="Get Location Names")
+	void GetAllLocationNames(EMapLocationCategory LocationCategory, TArray<FName>& OutLocations);
 
 	UPROPERTY(EditAnywhere, BlueprintReadWrite, Category="Auto Map" , DisplayName="Max Height To Capture")
 	AAutoMapProcessor* AutoMapProcessor;
@@ -81,6 +100,6 @@ private:
 	UPROPERTY()
 	USceneCaptureComponent2D* SnapshotCamera;
 
-
-	
+	UPROPERTY()
+	EMapLocationCategory LocationCategory = EMapLocationCategory::Region;
 };

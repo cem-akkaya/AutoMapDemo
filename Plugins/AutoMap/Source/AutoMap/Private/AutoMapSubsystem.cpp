@@ -197,5 +197,32 @@ void UAutoMapSubsystem::GetAllPins(EPinType PinType, TArray<AAutoMapPinBase*>& O
 
 }
 
+void UAutoMapSubsystem::GetAllLocationNames(EMapLocationCategory LocationTypeCategory, TArray<FName>& OutLocations){
+
+	TArray<FName> Locations;
+	if (AAutoMapPinBase* TempPin = NewObject<AAutoMapPinBase>())
+	{
+		Locations = TempPin->InitializeSubLocation(LocationTypeCategory);
+		OutLocations.Append(Locations);
+	}
+}
+
+void UAutoMapSubsystem::GetLocationPins(FName LocationName, TArray<AAutoMapPinBase*>& OutPins)
+{
+	TArray<AAutoMapPinBase*> AllLocationPins;
+	GetAllPins(Location, AllLocationPins);
+	TArray<AAutoMapPinBase*> LocationPins;
+
+	if (!AllLocationPins.IsEmpty()){
+		for (AAutoMapPinBase* LocationPin : AllLocationPins)
+
+			if (LocationPin->CurrentLocationNames == LocationName)
+			{
+				OutPins.Add(LocationPin);
+			}
+	}
+}
+
+
 
 

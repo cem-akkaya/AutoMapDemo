@@ -3,6 +3,7 @@
 
 #include "AutoMapPinBase.h"
 
+#include "AutoMapSubsystem.h"
 #include "Components/TextRenderComponent.h"
 
 
@@ -33,6 +34,42 @@ AAutoMapPinBase::AAutoMapPinBase(const FObjectInitializer& ObjectInitializer)
 	DebugActorText->TextRenderColor = FColor::Orange;
 
 	OnSpawn();
+}
+
+TArray<FName> AAutoMapPinBase::InitializeLocation()
+{
+	FDataTableRowHandle Location;
+	Location.DataTable = Cast<UDataTable>(StaticLoadObject(UDataTable::StaticClass(), nullptr, *(FPaths::ProjectPluginsDir() / TEXT("/Script/Engine.DataTable'/AutoMap/Data/AutoMapRegions.AutoMapRegions'"))));
+	return Location.DataTable->GetRowNames();
+}
+
+TArray<FName> AAutoMapPinBase::InitializeSubLocation(EMapLocationCategory LocationCategory)
+{
+	TArray<FName> MatchingRowNames;
+	FDataTableRowHandle Location;
+	Location.DataTable = Cast<UDataTable>(StaticLoadObject(UDataTable::StaticClass(), nullptr, *(FPaths::ProjectPluginsDir() / TEXT("/Script/Engine.DataTable'/AutoMap/Data/AutoMapRegions.AutoMapRegions'"))));
+	if (Location.DataTable)
+	{
+
+		// Iterate through each row in the DataTable
+		for (auto& Row : Location.DataTable->GetRowMap())
+		{
+			// Cast row data to your specific struct type (assuming FAutoMapRegion is the row struct type)
+			FAutoMapRegionsStruct* RegionData = reinterpret_cast<FAutoMapRegionsStruct*>(Row.Value);
+			if (RegionData)
+			{
+				// Check if the ProCat property matches the provided LocationCategory
+				if (RegionData->LocationCategory == LocationCategory)
+				{
+					// Add the name of the matching row to the array
+					MatchingRowNames.Add(Row.Key);
+				}
+			}
+		}
+
+		UE_LOG(LogTemp, Display, TEXT("AutoMap-> Found %d  Locations"), MatchingRowNames.Num());
+	}
+	return MatchingRowNames;
 }
 
 void AAutoMapPinBase::PositionToCamera()
@@ -87,7 +124,6 @@ void AAutoMapPinBase::SnapToGround()
 		}
 	}
 }
-
 
 // Called every frame
 void AAutoMapPinBase::Tick(float DeltaTime)

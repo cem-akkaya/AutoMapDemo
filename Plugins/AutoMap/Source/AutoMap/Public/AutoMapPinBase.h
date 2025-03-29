@@ -15,6 +15,14 @@ enum EPinType
 	Direction      UMETA(DisplayName = "Direction Pin"),
 };
 
+UENUM(BlueprintType)
+enum class EMapLocationCategory : uint8
+{
+	Region	  UMETA(DisplayName = "Region"),
+	SubRegion   UMETA(DisplayName = "SubRegion"),
+	Area		UMETA(DisplayName = "Area")
+};
+
 UCLASS()
 class AUTOMAP_API AAutoMapPinBase : public AActor
 {
@@ -35,6 +43,9 @@ public:
 	UPROPERTY(EditAnywhere, BlueprintReadWrite, Category="Auto Map - Pin Definations")
 	FName PinName = "Pin Name";
 
+	UPROPERTY(EditAnywhere, BlueprintReadWrite, Category="Auto Map - Pin Location", meta=(EditCondition="PinType == EPinType::Location"), meta = (GetOptions = "InitializeLocation"))
+	FName CurrentLocationNames;
+
 	UPROPERTY(EditAnywhere, BlueprintReadWrite, Category="Auto Map - Pin Usability")
 	bool bShouldSnapToGround = true;
 
@@ -46,7 +57,14 @@ protected:
 
 	void SnapToGround();
 
+
 public:
 	// Called every frame
 	virtual void Tick(float DeltaTime) override;
+
+	UFUNCTION(CallInEditor, BlueprintCallable)
+	TArray<FName> InitializeLocation();
+
+	UFUNCTION(CallInEditor, BlueprintCallable)
+	TArray<FName> InitializeSubLocation(EMapLocationCategory LocationCategory);
 };
