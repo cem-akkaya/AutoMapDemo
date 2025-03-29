@@ -21,12 +21,13 @@ AAutoMapPinBase::AAutoMapPinBase(const FObjectInitializer& ObjectInitializer)
 
 	ConstructorHelpers::FObjectFinder<UMaterial>DebugMaterial(TEXT("Material'/Engine/MapTemplates/Materials/BasicAsset01.BasicAsset01'"));
 	DebugMesh->SetMaterial(0, DebugMaterial.Object);
-	DebugMesh->SetRelativeScale3D(FVector(3, 3, 3));
+	DebugMesh->SetRelativeScale3D(FVector(10, 10, 10));
+	DebugMesh->SetRelativeLocation(FVector(0.0f, 0.0f, 100.0f));
 	
 	UTextRenderComponent* DebugActorText = CreateDefaultSubobject<UTextRenderComponent>("DebugText");
 	DebugActorText->SetupAttachment(GetRootComponent());
 	DebugActorText->SetText(FText::FromString("Auto Map Pin Actor"));
-	DebugActorText->SetRelativeLocation(FVector(0.0f, 0.0f, 100.0f));
+	DebugActorText->SetRelativeLocation(FVector(0.0f, 0.0f, 200.0f));
 
 	DebugActorText->HorizontalAlignment = EHorizTextAligment::EHTA_Center;
 	DebugActorText->TextRenderColor = FColor::Orange;

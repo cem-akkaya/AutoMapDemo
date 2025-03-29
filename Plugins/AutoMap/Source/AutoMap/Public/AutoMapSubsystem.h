@@ -4,6 +4,7 @@
 
 #include "CoreMinimal.h"
 #include "AutoMapPinBase.h"
+#include "AutoMapProcessor.h"
 #include "AutoMapRenderer.h"
 #include "Subsystems/GameInstanceSubsystem.h"
 #include "AutoMapSubsystem.generated.h"
@@ -38,6 +39,9 @@ public:
 	
 	UFUNCTION(BlueprintCallable, Category="Auto Map - Pins" , DisplayName="Get All Pins By Type")
 	void GetAllPins(EPinType PinType, TArray<AAutoMapPinBase*> &OutPins);
+
+	UPROPERTY(EditAnywhere, BlueprintReadWrite, Category="Auto Map" , DisplayName="Max Height To Capture")
+	AAutoMapProcessor* AutoMapProcessor;
 	
 	UPROPERTY(EditAnywhere, BlueprintReadWrite, Category="Auto Map" , DisplayName="Max Height To Capture")
 	float SnapshotHeight = 100000; // @todo this will be setting 
@@ -76,6 +80,7 @@ private:
 
 	UPROPERTY()
 	USceneCaptureComponent2D* SnapshotCamera;
-	
+
+
 	
 };
