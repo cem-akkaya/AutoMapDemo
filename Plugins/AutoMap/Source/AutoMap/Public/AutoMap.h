@@ -20,4 +20,6 @@ public:
 	void OnGenerateMapButtonClicked();
 	void OnSpawnMapBoundsActorButtonClicked();
 	void OnAddPinButtonClicked();
+	void OnDefineMapLocationsButtonClicked();
+	void OnSpawnMapRegionButtonClicked();
 };

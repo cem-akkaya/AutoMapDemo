@@ -59,6 +59,9 @@ public:
 	UFUNCTION(BlueprintCallable, Category="Auto Map - Pins" , DisplayName="Get Location Names")
 	void GetAllLocationNames(EMapLocationCategory LocationCategory, TArray<FName>& OutLocations);
 
+	UFUNCTION(BlueprintCallable, Category="Auto Map - Pins" , DisplayName="Resolve Region Name")
+	FName ResolveRegionName(FName InputRegionName);
+
 	UPROPERTY(EditAnywhere, BlueprintReadWrite, Category="Auto Map" , DisplayName="Max Height To Capture")
 	AAutoMapProcessor* AutoMapProcessor;
 	

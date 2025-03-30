@@ -6,6 +6,7 @@
 #include "AutoMapBoundsActor.h"
 #include "AutoMapRenderer.h"
 #include "Components/SceneCaptureComponent2D.h"
+#include "Components/SplineComponent.h"
 #include "Kismet/GameplayStatics.h"
 #include "Kismet/KismetMathLibrary.h"
 
@@ -205,6 +206,16 @@ void UAutoMapSubsystem::GetAllLocationNames(EMapLocationCategory LocationTypeCat
 		Locations = TempPin->InitializeSubLocation(LocationTypeCategory);
 		OutLocations.Append(Locations);
 	}
+}
+
+FName UAutoMapSubsystem::ResolveRegionName(FName InputRegionName)
+{
+	FName ResolvedRegionName = InputRegionName;
+	if (AAutoMapPinBase* TempPin = NewObject<AAutoMapPinBase>())
+	{
+		ResolvedRegionName = TempPin->ResolveRegionName(InputRegionName);
+	}
+	return ResolvedRegionName;
 }
 
 void UAutoMapSubsystem::GetLocationPins(FName LocationName, TArray<AAutoMapPinBase*>& OutPins)

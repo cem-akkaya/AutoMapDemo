@@ -67,4 +67,7 @@ public:
 
 	UFUNCTION(CallInEditor, BlueprintCallable)
 	TArray<FName> InitializeSubLocation(EMapLocationCategory LocationCategory);
+
+	UFUNCTION(BlueprintCallable, Category="Auto Map - Pins" , DisplayName="Resolve Region String")
+	FName ResolveRegionName(FName InputRegionName);
 };

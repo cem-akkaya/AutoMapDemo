@@ -72,6 +72,31 @@ TArray<FName> AAutoMapPinBase::InitializeSubLocation(EMapLocationCategory Locati
 	return MatchingRowNames;
 }
 
+FName AAutoMapPinBase::ResolveRegionName(FName InputRegionName)
+{
+		FDataTableRowHandle Location;
+    	Location.DataTable = Cast<UDataTable>(StaticLoadObject(UDataTable::StaticClass(), nullptr, *(FPaths::ProjectPluginsDir() / TEXT("/Script/Engine.DataTable'/AutoMap/Data/AutoMapRegions.AutoMapRegions'"))));
+    	if (Location.DataTable)
+    	{
+    
+    		// Iterate through each row in the DataTable
+    		for (auto& Row : Location.DataTable->GetRowMap())
+    		{
+    			// Cast row data to your specific struct type (assuming FAutoMapRegion is the row struct type)
+    			FAutoMapRegionsStruct* RegionData = reinterpret_cast<FAutoMapRegionsStruct*>(Row.Value);
+    			if (RegionData)
+    			{
+    				// Check if the property matches the provided LocationCategory
+    				if (Row.Key == InputRegionName)
+    				{
+    					InputRegionName = RegionData->RegionName;
+    				}
+    			}
+    		}
+    	}
+	return InputRegionName;
+}
+
 void AAutoMapPinBase::PositionToCamera()
 {
 	FViewport* activeViewport = GEditor->GetActiveViewport();

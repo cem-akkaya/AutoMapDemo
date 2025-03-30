@@ -5,11 +5,17 @@
 #include "AutoMapBoundsActor.h"
 #include "AutoMapPinBase.h"
 #include "AutoMapSubsystem.h"
+#include "AutoMapWorldRegionGenerator.h"
+#include "ContentBrowserModule.h"
+#include "IContentBrowserSingleton.h"
 #include "LevelEditor.h"
+#include "AssetRegistry/AssetRegistryModule.h"
 #include "Kismet/GameplayStatics.h"
 #include "Kismet/KismetMathLibrary.h"
 
 #define LOCTEXT_NAMESPACE "FAutoMapModule"
+
+class FAssetRegistryModule;
 
 void FAutoMapModule::StartupModule()
 {
@@ -55,9 +61,23 @@ void FAutoMapModule::FillMenu(FMenuBuilder& MenuBuilder) {
 	MenuBuilder.AddMenuEntry(
 	LOCTEXT("AddPinKey", "Add Pin Actor"),
 	LOCTEXT("AddPinKeyTooltipKey", "Click to add pin definition actor"),
-	FSlateIcon(FAppStyle::GetAppStyleSetName(), "ProjectSettings.TabIcon"),
+	FSlateIcon(FAppStyle::GetAppStyleSetName(), "ViewportActorPreview.Pinned"),
 	FUIAction(FExecuteAction::CreateRaw(this, &FAutoMapModule::OnAddPinButtonClicked))
-);
+	);
+
+	MenuBuilder.AddMenuEntry(
+	LOCTEXT("DefineMapLocations", "Define Map Locations"),
+	LOCTEXT("DefineMapLocationsTooltipKey", "Click to define map locations"),
+	FSlateIcon(FAppStyle::GetAppStyleSetName(), "Icons.Download"),
+	FUIAction(FExecuteAction::CreateRaw(this, &FAutoMapModule::OnDefineMapLocationsButtonClicked))
+	);
+
+	MenuBuilder.AddMenuEntry(
+	LOCTEXT("SpawnRegionDefinitionActor", "Define Region"),
+	LOCTEXT("SpawnRegionDefinitionActorTooltipKey", "Click to spawn region defination actor"),
+	FSlateIcon(FAppStyle::GetAppStyleSetName(), "ContentReference.PickAsset"),
+	FUIAction(FExecuteAction::CreateRaw(this, &FAutoMapModule::OnSpawnMapRegionButtonClicked))
+	);
 }
 
 void FAutoMapModule::OnSpawnMapBoundsActorButtonClicked()
@@ -121,6 +141,44 @@ void FAutoMapModule::OnAddPinButtonClicked()
 			GEditor->MoveActorInFrontOfCamera(*SpawnedActor, EditorCameraLocation, EditorCameraDirection);
 		}
 		UE_LOG(LogTemp, Warning, TEXT("AutoMap-> Spawned Map Pin Actor"));
+	}
+	else
+	{
+		UE_LOG(LogTemp, Warning, TEXT("AutoMap-> No Maps Detected"));
+	}
+}
+
+void FAutoMapModule::OnDefineMapLocationsButtonClicked()
+{
+
+	FString AssetPath = FPaths::ProjectPluginsDir() + TEXT("/Script/Engine.DataTable'/AutoMap/Data/AutoMapRegions.AutoMapRegions'");
+	UObject* Asset = StaticLoadObject(UDataTable::StaticClass(), nullptr, *AssetPath);
+	if (Asset)
+	{
+		GEditor->EditObject(Asset);
+	}
+}
+
+void FAutoMapModule::OnSpawnMapRegionButtonClicked()
+{
+	if (UWorld* World = GEditor->GetEditorWorldContext().World()) {
+
+		FVector Location(0, 0.0f, 0.0f);
+		FRotator Rotation(0.0f, 0.0f, 0.0f);
+		FActorSpawnParameters SpawnInfo;
+		
+		AActor* SpawnedActor = World->SpawnActor<AAutoMapWorldRegionGenerator>(Location, Rotation, SpawnInfo);
+
+		FViewport* activeViewport = GEditor->GetActiveViewport();
+		FEditorViewportClient* editorViewClient = (activeViewport != nullptr) ? (FEditorViewportClient*)activeViewport->GetClient() : nullptr;
+		if( editorViewClient )
+		{
+			FVector EditorCameraLocation = editorViewClient->GetViewLocation();
+			FRotator EditorCameraRotation = editorViewClient->GetViewRotation();
+			FVector EditorCameraDirection = FRotationMatrix(EditorCameraRotation).GetUnitAxis(EAxis::X);
+			GEditor->MoveActorInFrontOfCamera(*SpawnedActor, EditorCameraLocation, EditorCameraDirection);
+		}
+		UE_LOG(LogTemp, Warning, TEXT("AutoMap-> Region Generator Actor"));
 	}
 	else
 	{
