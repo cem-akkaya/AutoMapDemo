@@ -10,6 +10,7 @@ UENUM(BlueprintType)
 enum EPinType
 {
 	Location UMETA(DisplayName = "Location Pin"),
+	LocationNameHolder UMETA(DisplayName = "Location Name Pin"),
 	Objective   UMETA(DisplayName = "Objective Pin"),
 	Waypoint    UMETA(DisplayName = "Waypoint Pin"),
 	Direction      UMETA(DisplayName = "Direction Pin"),
@@ -43,7 +44,7 @@ public:
 	UPROPERTY(EditAnywhere, BlueprintReadWrite, Category="Auto Map - Pin Definations")
 	FName PinName = "Pin Name";
 
-	UPROPERTY(EditAnywhere, BlueprintReadWrite, Category="Auto Map - Pin Location", meta=(EditCondition="PinType == EPinType::Location"), meta = (GetOptions = "InitializeLocation"))
+	UPROPERTY(EditAnywhere, BlueprintReadWrite, Category="Auto Map - Pin Location", meta=(EditCondition="PinType == EPinType::Location || PinType == EPinType::LocationNameHolder", GetOptions = "InitializeLocation"))
 	FName CurrentLocationNames;
 
 	UPROPERTY(EditAnywhere, BlueprintReadWrite, Category="Auto Map - Pin Usability")
