@@ -4,8 +4,6 @@
 #include "AutoMapSubsystem.h"
 
 #include "AutoMapBoundsActor.h"
-#include "AutoMapRenderer.h"
-#include "Components/SceneCaptureComponent2D.h"
 #include "Components/SplineComponent.h"
 #include "Kismet/GameplayStatics.h"
 #include "Kismet/KismetMathLibrary.h"
@@ -22,41 +20,6 @@ void UAutoMapSubsystem::Deinitialize()
 	Super::Deinitialize();
 }
 
-void UAutoMapSubsystem::SnapshotMap()
-{
-	TArray<AActor*> OutActors;
-	if (UWorld* World = GEditor->GetEditorWorldContext().World())
-	{
-		bool bCoordinateSystemStatus = false;
-		float CurrentCoordinateScale = -1.0f;
-		float CurrentCoordinateSystemDimension = -1.0f;
-		FVector CurrentMapWorldOrigin = FVector::ZeroVector;
-		
-		GetCoordinateSystem(bCoordinateSystemStatus, CurrentCoordinateScale, CurrentCoordinateSystemDimension, CurrentMapWorldOrigin);
-
-		if (bCoordinateSystemStatus)
-		{
-			FVector MidPoint = CurrentMapWorldOrigin;
-			MidPoint.Z = SnapshotHeight; 
-			
-			FRotator Rotation(-90.0f, 0.0f, 0.0f);
-			FActorSpawnParameters SpawnInfo;
-
-			SnapshotCameraActor = World->SpawnActor<AAutoMapRenderer>(MidPoint, Rotation, SpawnInfo);
-			SnapshotCamera = SnapshotCameraActor->GetComponentByClass<USceneCaptureComponent2D>();
-
-			SnapshotCameraActor->PrepareRenderer(CoordinateSystemDimension, Resolution);
-		}
-		else
-		{
-			UE_LOG(LogTemp, Warning, TEXT("AutoMap-> No Maps Bound Actors Found, Place Bounds Actors First"));
-		}
-	}
-	else
-	{
-		UE_LOG(LogTemp, Warning, TEXT("AutoMap-> No Map Found"));
-	}
-}
 
 void UAutoMapSubsystem::InitCoordinateSystem(FVector InLocalCoordinatePlane)
 {

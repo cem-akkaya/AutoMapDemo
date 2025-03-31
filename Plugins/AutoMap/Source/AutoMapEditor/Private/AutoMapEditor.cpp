@@ -1,6 +1,7 @@
 ﻿#include "AutoMapEditor.h"
 
 #include "AutoMapBoundsActor.h"
+#include "AutoMapEditorSubsystem.h"
 #include "AutoMapPinBase.h"
 #include "AutoMapSubsystem.h"
 #include "AutoMapWorldRegionGenerator.h"
@@ -196,9 +197,9 @@ void FAutoMapEditorModule::OnGenerateMapButtonClicked()
 	//Get Subsystem
 	if (GEditor->GetEditorWorldContext().World())
 	{
-		if (UAutoMapSubsystem* AutoMapSubsystem = GEngine->GetEngineSubsystem<UAutoMapSubsystem>())
+        if (UAutoMapEditorSubsystem* AutoMapEditorSubsystemSubsystem = GEditor->GetEditorSubsystem<UAutoMapEditorSubsystem>())
 		{
-			AutoMapSubsystem->SnapshotMap();
+			AutoMapEditorSubsystemSubsystem->SnapshotMap();
 		}
 		else
 		{

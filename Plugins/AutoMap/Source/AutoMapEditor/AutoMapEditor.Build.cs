@@ -21,7 +21,8 @@ public class AutoMapEditor : ModuleRules
                 "Slate",
                 "SlateCore",
                 "UnrealEd",
-                "AutoMap"
+                "AutoMap",
+                "EditorSubsystem"
             }
         );
     }

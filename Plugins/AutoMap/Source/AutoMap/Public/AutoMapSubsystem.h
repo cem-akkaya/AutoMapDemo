@@ -34,9 +34,9 @@ public:
 	virtual void Initialize(FSubsystemCollectionBase& Collection) override;
 
 	virtual void Deinitialize() override;
-	
-	UFUNCTION(BlueprintCallable, Category="Auto Map" , DisplayName="Render Map Snapshot")
-	void SnapshotMap();
+
+	UPROPERTY(EditAnywhere, BlueprintReadWrite, Category="Auto Map" , DisplayName="Map Snapshot Resolution")
+	int32 Resolution = 8192;  // @todo this will be setting
 
 	UFUNCTION(BlueprintCallable, Category="Auto Map" , DisplayName="Init Coordinate System")
 	void InitCoordinateSystem(FVector LocalCoordinatePlane);
@@ -64,12 +64,6 @@ public:
 
 	UPROPERTY(EditAnywhere, BlueprintReadWrite, Category="Auto Map" , DisplayName="Max Height To Capture")
 	AAutoMapProcessor* AutoMapProcessor;
-	
-	UPROPERTY(EditAnywhere, BlueprintReadWrite, Category="Auto Map" , DisplayName="Max Height To Capture")
-	float SnapshotHeight = 100000; // @todo this will be setting 
-
-	UPROPERTY(EditAnywhere, BlueprintReadWrite, Category="Auto Map" , DisplayName="Map Snapshot Resolution")
-	int32 Resolution = 8192;  // @todo this will be setting
 
 	UPROPERTY(EditAnywhere, BlueprintReadWrite, Category="Auto Map" , DisplayName="Map Snapshot UMG Resolution")
 	int32 UMGResolution = 2048;  // @todo this will be setting
@@ -96,12 +90,6 @@ public:
 	FVector LocalCoordinatePlane;
 
 private:
-
-	UPROPERTY()
-	AAutoMapRenderer* SnapshotCameraActor;
-
-	UPROPERTY()
-	USceneCaptureComponent2D* SnapshotCamera;
 
 	UPROPERTY()
 	EMapLocationCategory LocationCategory = EMapLocationCategory::Region;
