@@ -4,16 +4,16 @@
 
 #include "CoreMinimal.h"
 #include "GameFramework/Actor.h"
-#include "AutoMapRenderer.generated.h"
+#include "AutoMapEditorRenderer.generated.h"
 
 UCLASS()
-class AUTOMAP_API AAutoMapRenderer : public AActor
+class AUTOMAPEDITOR_API AAutoMapEditorRenderer : public AActor
 {
 	GENERATED_BODY()
 
 public:
 	// Sets default values for this actor's properties
-	AAutoMapRenderer(const FObjectInitializer& ObjectInitializer);
+	AAutoMapEditorRenderer(const FObjectInitializer& ObjectInitializer);
 
 	UPROPERTY()
 	USceneCaptureComponent2D* SnapshotCamera;

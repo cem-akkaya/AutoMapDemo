@@ -39,20 +39,6 @@ void AAutoMapBoundsActor::PostEditMove(bool bFinished)
 	AlignBoundsToCoordinateSystem();
 }
 
-void AAutoMapBoundsActor::PositionToCamera()
-{
-	FViewport* activeViewport = GEditor->GetActiveViewport();
-	FEditorViewportClient* editorViewClient = (activeViewport != nullptr) ? (FEditorViewportClient*)activeViewport->GetClient() : nullptr;
-	if( editorViewClient )
-	{
-		FVector EditorCameraLocation = editorViewClient->GetViewLocation();
-		FRotator EditorCameraRotation = editorViewClient->GetViewRotation();
-		FVector EditorCameraDirection = FRotationMatrix(EditorCameraRotation).GetUnitAxis(EAxis::X);
-		GEditor->MoveActorInFrontOfCamera(*this, EditorCameraLocation, EditorCameraDirection);
-	}
-	AlignBoundsToCoordinateSystem();
-}
-
 // Called when the game starts or when spawned
 void AAutoMapBoundsActor::BeginPlay()
 {

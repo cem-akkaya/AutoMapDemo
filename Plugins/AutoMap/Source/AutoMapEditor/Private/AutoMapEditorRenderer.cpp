@@ -1,7 +1,7 @@
 ﻿// Fill out your copyright notice in the Description page of Project Settings.
 
 
-#include "AutoMapRenderer.h"
+#include "AutoMapEditorRenderer.h"
 
 #include "EditorReimportHandler.h"
 #include "ImageUtils.h"
@@ -13,7 +13,7 @@
 
 
 // Sets default values
-AAutoMapRenderer::AAutoMapRenderer(const FObjectInitializer& ObjectInitializer)
+AAutoMapEditorRenderer::AAutoMapEditorRenderer(const FObjectInitializer& ObjectInitializer)
 :Super(ObjectInitializer)
 {
 	// Set this actor to call Tick() every frame.  You can turn this off to improve performance if you don't need it.
@@ -34,7 +34,7 @@ AAutoMapRenderer::AAutoMapRenderer(const FObjectInitializer& ObjectInitializer)
 	DepthTex = DepthTexRef.Object;
 }
 
-void AAutoMapRenderer::PrepareRenderer(float RenderWidth, int32 TexResolution)
+void AAutoMapEditorRenderer::PrepareRenderer(float RenderWidth, int32 TexResolution)
 {
 	Resolution = TexResolution;
 	
@@ -54,7 +54,7 @@ void AAutoMapRenderer::PrepareRenderer(float RenderWidth, int32 TexResolution)
 	GetRenders();
 }
 
-void AAutoMapRenderer::GetRenders()
+void AAutoMapEditorRenderer::GetRenders()
 {
 	CaptureFinalColor();
 	CaptureAlbedo();
@@ -63,7 +63,7 @@ void AAutoMapRenderer::GetRenders()
 	this->Destroy();
 }
 
-void AAutoMapRenderer::CaptureFinalColor()
+void AAutoMapEditorRenderer::CaptureFinalColor()
 {
 	// Set Texture
 	UTextureRenderTarget2D* FinalColorRenderTarget = UKismetRenderingLibrary::CreateRenderTarget2D(GEditor->GetEditorWorldContext().World(), Resolution, Resolution, RTF_RGBA8);
@@ -90,7 +90,7 @@ void AAutoMapRenderer::CaptureFinalColor()
 	}
 }
 
-void AAutoMapRenderer::CaptureAlbedo()
+void AAutoMapEditorRenderer::CaptureAlbedo()
 {
 	// Set Texture
 	UTextureRenderTarget2D* AlbedoRenderTarget = UKismetRenderingLibrary::CreateRenderTarget2D(GEditor->GetEditorWorldContext().World(), Resolution, Resolution, RTF_RGBA8);
@@ -117,7 +117,7 @@ void AAutoMapRenderer::CaptureAlbedo()
 	}
 }
 
-void AAutoMapRenderer::CaptureNormal()
+void AAutoMapEditorRenderer::CaptureNormal()
 {
 	// Set Texture
 	UTextureRenderTarget2D* NormalRenderTarget = UKismetRenderingLibrary::CreateRenderTarget2D(GEditor->GetEditorWorldContext().World(), Resolution, Resolution, RTF_RGBA8);
@@ -144,7 +144,7 @@ void AAutoMapRenderer::CaptureNormal()
 	}
 }
 
-void AAutoMapRenderer::CaptureDepth()
+void AAutoMapEditorRenderer::CaptureDepth()
 {
 	// Set Texture
 	UTextureRenderTarget2D* DepthRenderTarget = UKismetRenderingLibrary::CreateRenderTarget2D(GEditor->GetEditorWorldContext().World(), Resolution, Resolution, RTF_R8);
@@ -173,7 +173,7 @@ void AAutoMapRenderer::CaptureDepth()
 
 }
 
-void AAutoMapRenderer::ReImportImages(UTexture* TextureToImport)
+void AAutoMapEditorRenderer::ReImportImages(UTexture* TextureToImport)
 {
 	if (TextureToImport)
 	{
@@ -210,14 +210,14 @@ void AAutoMapRenderer::ReImportImages(UTexture* TextureToImport)
 }
 
 // Called when the game starts or when spawned
-void AAutoMapRenderer::BeginPlay()
+void AAutoMapEditorRenderer::BeginPlay()
 {
 	Super::BeginPlay();
 	
 }
 
 // Called every frame
-void AAutoMapRenderer::Tick(float DeltaTime)
+void AAutoMapEditorRenderer::Tick(float DeltaTime)
 {
 	Super::Tick(DeltaTime);
 }

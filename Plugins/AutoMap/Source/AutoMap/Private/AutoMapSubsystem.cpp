@@ -41,7 +41,7 @@ void UAutoMapSubsystem::GetCoordinateSystem(bool& Status, float& CoordinateScale
 	CoordinateSystemDimensions = -1;
 	MapWorldOrigin = FVector::ZeroVector;
 	
-	if (UWorld* World = GEditor->GetEditorWorldContext().World()){
+	if (UWorld* World =  GetWorld()){
 		UGameplayStatics::GetAllActorsOfClass(World, AAutoMapBoundsActor::StaticClass(), OutActors);
 
 		if (OutActors.Num() == 2)
@@ -134,7 +134,7 @@ void UAutoMapSubsystem::GetAllPins(EPinType PinType, TArray<AAutoMapPinBase*>& O
 {
 	TArray<AAutoMapPinBase*> FoundPins;
 
-	if (UWorld* World = GEditor->GetEditorWorldContext().World()){
+	if (UWorld* World = GetWorld()){
 		TArray<AActor*> TempActors;
 		UGameplayStatics::GetAllActorsOfClass(World, AAutoMapPinBase::StaticClass(), TempActors);
 		

@@ -4,7 +4,7 @@
 
 #include "CoreMinimal.h"
 #include "EditorSubsystem.h"
-#include "AutoMapRenderer.h"
+#include "AutoMapEditorRenderer.h"
 #include "AutoMapEditorSubsystem.generated.h"
 
 /**
@@ -27,6 +27,9 @@ public:
 	int32 Resolution = 8192;  // @todo this will be setting
 	
 	UPROPERTY()
-	AAutoMapRenderer* SnapshotCameraActor;
+	AAutoMapEditorRenderer* SnapshotCameraActor;
+
+	UFUNCTION(CallInEditor, Category="Auto Map" , DisplayName="Set Actor To Camera View")
+	void PositionToCamera(AActor* InActor);
 	
 };

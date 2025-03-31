@@ -32,10 +32,7 @@ class AUTOMAP_API AAutoMapPinBase : public AActor
 public:
 	// Sets default values for this actor's properties
 	AAutoMapPinBase(const FObjectInitializer& ObjectInitializer);
-
-	UFUNCTION(CallInEditor, Category="Auto Map" , DisplayName="Set To Camera View")
-	void PositionToCamera();
-
+	
 	virtual void PostEditMove(bool bFinished) override;
 
 	UPROPERTY(EditAnywhere, BlueprintReadWrite, Category="Auto Map - Pin Definations")

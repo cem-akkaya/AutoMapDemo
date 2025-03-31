@@ -14,7 +14,7 @@ void UAutoMapEditorSubsystem::SnapshotMap()
 		float CurrentCoordinateSystemDimension = -1.0f;
 		FVector CurrentMapWorldOrigin = FVector::ZeroVector;
 
-		UAutoMapSubsystem* AutoMapSubsystem = GEngine->GetEngineSubsystem<UAutoMapSubsystem>();
+		UAutoMapSubsystem* AutoMapSubsystem = World->GetGameInstance()->GetSubsystem<UAutoMapSubsystem>();
 		AutoMapSubsystem->GetCoordinateSystem(bCoordinateSystemStatus, CurrentCoordinateScale, CurrentCoordinateSystemDimension, CurrentMapWorldOrigin);
 
 		if (bCoordinateSystemStatus)
@@ -25,7 +25,7 @@ void UAutoMapEditorSubsystem::SnapshotMap()
 			FRotator Rotation(-90.0f, 0.0f, 0.0f);
 			FActorSpawnParameters SpawnInfo;
 
-			SnapshotCameraActor = World->SpawnActor<AAutoMapRenderer>(MidPoint, Rotation, SpawnInfo);
+			SnapshotCameraActor = World->SpawnActor<AAutoMapEditorRenderer>(MidPoint, Rotation, SpawnInfo);
 			SnapshotCameraActor->PrepareRenderer(CurrentCoordinateSystemDimension, Resolution);
 		}
 		else
@@ -36,5 +36,18 @@ void UAutoMapEditorSubsystem::SnapshotMap()
 	else
 	{
 		UE_LOG(LogTemp, Warning, TEXT("AutoMap-> No Map Found"));
+	}
+}
+
+void UAutoMapEditorSubsystem::PositionToCamera(AActor* InActor)
+{
+	FViewport* activeViewport = GEditor->GetActiveViewport();
+	FEditorViewportClient* editorViewClient = (activeViewport != nullptr) ? (FEditorViewportClient*)activeViewport->GetClient() : nullptr;
+	if( editorViewClient )
+	{
+		FVector EditorCameraLocation = editorViewClient->GetViewLocation();
+		FRotator EditorCameraRotation = editorViewClient->GetViewRotation();
+		FVector EditorCameraDirection = FRotationMatrix(EditorCameraRotation).GetUnitAxis(EAxis::X);
+		GEditor->MoveActorInFrontOfCamera(*InActor, EditorCameraLocation, EditorCameraDirection);
 	}
 }

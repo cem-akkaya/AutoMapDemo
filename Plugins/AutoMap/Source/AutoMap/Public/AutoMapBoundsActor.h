@@ -19,9 +19,6 @@ public:
 	// Sets default values for this actor's properties
 	explicit AAutoMapBoundsActor(const FObjectInitializer& ObjectInitializer);
 
-	UFUNCTION(CallInEditor, Category="Auto Map" , DisplayName="Set To Camera View")
-	void PositionToCamera();
-
 protected:
 	// Called when the game starts or when spawned
 	virtual void BeginPlay() override;

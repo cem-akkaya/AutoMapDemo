@@ -37,8 +37,7 @@ public class AutoMap : ModuleRules
 				"CoreUObject",
 				"Engine",
 				"Slate",
-				"SlateCore",
-				"UnrealEd"
+				"SlateCore"
 				// ... add private dependencies that you statically link with here ...	
 			}
 			);

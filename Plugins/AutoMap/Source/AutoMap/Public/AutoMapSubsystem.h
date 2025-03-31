@@ -5,7 +5,6 @@
 #include "CoreMinimal.h"
 #include "AutoMapPinBase.h"
 #include "AutoMapProcessor.h"
-#include "AutoMapRenderer.h"
 #include "Subsystems/GameInstanceSubsystem.h"
 #include "AutoMapSubsystem.generated.h"
 
@@ -23,10 +22,16 @@ struct FAutoMapRegionsStruct : public FTableRowBase
 
 	UPROPERTY(EditAnywhere, BlueprintReadWrite, Category="Auto Map - Locations Region")
 	EMapLocationCategory LocationCategory;
+	
+	FAutoMapRegionsStruct()
+		: RegionName(NAME_None),
+		  LocationCategory(EMapLocationCategory::Region)
+	{
+	}
 };
 
 UCLASS()
-class AUTOMAP_API UAutoMapSubsystem : public UEngineSubsystem
+class AUTOMAP_API UAutoMapSubsystem : public UGameInstanceSubsystem
 {
 	GENERATED_BODY()
 

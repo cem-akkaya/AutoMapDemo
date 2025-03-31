@@ -97,20 +97,6 @@ FName AAutoMapPinBase::ResolveRegionName(FName InputRegionName)
 	return InputRegionName;
 }
 
-void AAutoMapPinBase::PositionToCamera()
-{
-	FViewport* activeViewport = GEditor->GetActiveViewport();
-	FEditorViewportClient* editorViewClient = (activeViewport != nullptr) ? (FEditorViewportClient*)activeViewport->GetClient() : nullptr;
-	if( editorViewClient )
-	{
-		FVector EditorCameraLocation = editorViewClient->GetViewLocation();
-		FRotator EditorCameraRotation = editorViewClient->GetViewRotation();
-		FVector EditorCameraDirection = FRotationMatrix(EditorCameraRotation).GetUnitAxis(EAxis::X);
-		GEditor->MoveActorInFrontOfCamera(*this, EditorCameraLocation, EditorCameraDirection);
-	}
-	SnapToGround();
-}
-
 void AAutoMapPinBase::PostEditMove(bool bFinished)
 {
 	Super::PostEditMove(bFinished);
