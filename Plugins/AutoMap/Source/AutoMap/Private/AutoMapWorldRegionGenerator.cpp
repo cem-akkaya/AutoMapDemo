@@ -27,11 +27,13 @@ AAutoMapWorldRegionGenerator::AAutoMapWorldRegionGenerator(const FObjectInitiali
 	InitializeSpline(PinSpawnDensity);
 }
 
+#if WITH_EDITOR
 void AAutoMapWorldRegionGenerator::PostEditMove(bool bFinished)
 {
 	Super::PostEditMove(bFinished);
 	InitializeSpline(PinSpawnDensity);
 }
+#endif
 
 void AAutoMapWorldRegionGenerator::BeginDestroy()
 {

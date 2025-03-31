@@ -32,12 +32,14 @@ AAutoMapBoundsActor::AAutoMapBoundsActor(const FObjectInitializer& ObjectInitial
 	AlignBoundsToCoordinateSystem();
 }
 
+#if WITH_EDITOR
 void AAutoMapBoundsActor::PostEditMove(bool bFinished)
 {
 	Super::PostEditMove(bFinished);
 
 	AlignBoundsToCoordinateSystem();
 }
+#endif
 
 // Called when the game starts or when spawned
 void AAutoMapBoundsActor::BeginPlay()

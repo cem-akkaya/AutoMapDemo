@@ -12,8 +12,9 @@ class AUTOMAP_API AAutoMapBoundsActor : public AActor
 	GENERATED_BODY()
 
 protected:
-	// Called when the actor's properties, including transform, are updated in the editor
+#if WITH_EDITOR
 	virtual void PostEditMove(bool bFinished) override;
+#endif
 	
 public:
 	// Sets default values for this actor's properties

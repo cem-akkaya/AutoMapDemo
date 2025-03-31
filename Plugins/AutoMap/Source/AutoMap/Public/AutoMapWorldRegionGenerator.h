@@ -17,8 +17,10 @@ public:
 	// Sets default values for this actor's properties
 	AAutoMapWorldRegionGenerator(const FObjectInitializer& ObjectInitializer);
 
+#if WITH_EDITOR
 	virtual void PostEditMove(bool bFinished) override;
-
+#endif
+	
 	virtual void BeginDestroy() override;
 
 	UPROPERTY(EditAnywhere, Category="Auto Map")

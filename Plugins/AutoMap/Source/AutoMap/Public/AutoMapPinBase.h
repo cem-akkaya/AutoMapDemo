@@ -32,8 +32,10 @@ class AUTOMAP_API AAutoMapPinBase : public AActor
 public:
 	// Sets default values for this actor's properties
 	AAutoMapPinBase(const FObjectInitializer& ObjectInitializer);
-	
+
+#if WITH_EDITOR
 	virtual void PostEditMove(bool bFinished) override;
+#endif
 
 	UPROPERTY(EditAnywhere, BlueprintReadWrite, Category="Auto Map - Pin Definations")
 	TEnumAsByte<EPinType> PinType = EPinType::Location;

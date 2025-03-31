@@ -97,12 +97,14 @@ FName AAutoMapPinBase::ResolveRegionName(FName InputRegionName)
 	return InputRegionName;
 }
 
+#if WITH_EDITOR
 void AAutoMapPinBase::PostEditMove(bool bFinished)
 {
 	Super::PostEditMove(bFinished);
 
 	SnapToGround();
 }
+#endif
 
 // Called when the game starts or when spawned
 void AAutoMapPinBase::BeginPlay()
