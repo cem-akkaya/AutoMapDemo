@@ -18,6 +18,11 @@
 			"Name": "AutoMap",
 			"Type": "Runtime",
 			"LoadingPhase": "PreDefault"
+		},
+		{
+			"Name": "AutoMapEditor",
+			"Type": "Editor",
+			"LoadingPhase": "PreDefault"
 		}
 	]
 }
