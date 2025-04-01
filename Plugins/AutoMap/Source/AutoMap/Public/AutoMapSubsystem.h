@@ -5,7 +5,7 @@
 #include "CoreMinimal.h"
 #include "AutoMapPinBase.h"
 #include "AutoMapProcessor.h"
-#include "Subsystems/GameInstanceSubsystem.h"
+#include "Subsystems/WorldSubsystem.h"
 #include "AutoMapSubsystem.generated.h"
 
 /**
@@ -31,7 +31,7 @@ struct FAutoMapRegionsStruct : public FTableRowBase
 };
 
 UCLASS()
-class AUTOMAP_API UAutoMapSubsystem : public UGameInstanceSubsystem
+class AUTOMAP_API UAutoMapSubsystem : public UWorldSubsystem
 {
 	GENERATED_BODY()
 
@@ -39,7 +39,7 @@ public:
 	virtual void Initialize(FSubsystemCollectionBase& Collection) override;
 
 	virtual void Deinitialize() override;
-
+	
 	UPROPERTY(EditAnywhere, BlueprintReadWrite, Category="Auto Map" , DisplayName="Map Snapshot Resolution")
 	int32 Resolution = 8192;  // @todo this will be setting
 

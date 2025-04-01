@@ -32,4 +32,6 @@ public:
 	UFUNCTION(CallInEditor, Category="Auto Map" , DisplayName="Set Actor To Camera View")
 	void PositionToCamera(AActor* InActor);
 	
+	void GetCoordinateSystem(bool& Status, float& CoordinateScales, float& CoordinateSystemDimensions,
+	                         FVector& MapWorldOrigin);
 };

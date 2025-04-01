@@ -3,7 +3,6 @@
 #include "AutoMapBoundsActor.h"
 #include "AutoMapEditorSubsystem.h"
 #include "AutoMapPinBase.h"
-#include "AutoMapSubsystem.h"
 #include "AutoMapWorldRegionGenerator.h"
 #include "LevelEditor.h"
 #include "Kismet/GameplayStatics.h"
