@@ -15,6 +15,7 @@ public:
 
     // Menu Actions
     void OnGenerateMapButtonClicked();
+    void OnRegenerateRegionsClicked();
     void OnSpawnMapBoundsActorButtonClicked();
     void OnAddPinButtonClicked();
     void OnDefineMapLocationsButtonClicked();

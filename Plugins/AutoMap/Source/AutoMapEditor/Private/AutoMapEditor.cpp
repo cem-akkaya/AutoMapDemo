@@ -75,10 +75,16 @@ void FAutoMapEditorModule::FillMenu(FMenuBuilder& MenuBuilder)
 
 	MenuBuilder.AddMenuEntry(
 		LOCTEXT("SpawnRegionDefinitionActor", "Define Region"),
-		LOCTEXT("SpawnRegionDefinitionActorTooltipKey", "Click to spawn region defination actor"),
+		LOCTEXT("SpawnRegionDefinitionActorTooltipKey", "Click to spawn region definition actor"),
 		FSlateIcon(FAppStyle::GetAppStyleSetName(), "ContentReference.PickAsset"),
 		FUIAction(FExecuteAction::CreateRaw(this, &FAutoMapEditorModule::OnSpawnMapRegionButtonClicked))
 	);
+	MenuBuilder.AddMenuEntry(
+	LOCTEXT("ReGenerateAllRegionDefinitions", "Re-Generate All Region Definitions"),
+	LOCTEXT("ReGenerateAllRegionDefinitionsTooltipKey", "Click to Regenerate All Definitions"),
+	FSlateIcon(FAppStyle::GetAppStyleSetName(), "SoftwareCursor_CardinalCross"),
+	FUIAction(FExecuteAction::CreateRaw(this, &FAutoMapEditorModule::OnRegenerateRegionsClicked))
+);
 }
 
 void FAutoMapEditorModule::OnSpawnMapBoundsActorButtonClicked()
@@ -205,6 +211,71 @@ void FAutoMapEditorModule::OnGenerateMapButtonClicked()
 		{
 			UE_LOG(LogTemp, Warning, TEXT("AutoMap-> No Subsystem Found"));
 		}
+	}
+}
+
+void FAutoMapEditorModule::OnRegenerateRegionsClicked()
+{
+	
+	if (UWorld* World = GEditor->GetEditorWorldContext().World())
+	{
+		TArray<AActor*> TempActors;
+		TArray<AAutoMapPinBase*> OutPins;
+		
+		UGameplayStatics::GetAllActorsOfClass(World, AAutoMapPinBase::StaticClass(), TempActors);
+
+		for (AActor* Actor : TempActors)
+		{
+			if (AAutoMapPinBase* AutoMapPin = static_cast<AAutoMapPinBase*>(Actor))
+			{
+				if (AutoMapPin->PinType == Location)
+				{
+					OutPins.Add(AutoMapPin);
+				}
+			}
+			if (!OutPins.IsEmpty())
+			{
+				for (auto OutPin : OutPins)
+				{
+					OutPin->Destroy();
+				}
+				UE_LOG(LogTemp, Warning, TEXT("AutoMap-> Deleting Previous Regions Data"));
+			}
+			else
+			{
+				UE_LOG(LogTemp, Warning, TEXT("AutoMap-> No Region Generators Found"));
+			}
+		}
+		TempActors.Empty();
+		
+		TArray<AAutoMapWorldRegionGenerator*> OutRegions;
+			
+		UGameplayStatics::GetAllActorsOfClass(World, AAutoMapWorldRegionGenerator::StaticClass(), TempActors);
+		for (AActor* Actor : TempActors)
+		{
+			if (AAutoMapWorldRegionGenerator* RegionGenerator = static_cast<AAutoMapWorldRegionGenerator*>(Actor))
+			{
+				OutRegions.Add(RegionGenerator);
+			}
+			if (!OutRegions.IsEmpty())
+			{
+				for (auto Region : OutRegions)
+				{
+					Region->InitializeSpline(Region->PinSpawnDensity);;
+					UE_LOG(LogTemp, Warning, TEXT("AutoMap-> Successfully Regenerated Regions For AutoMapSubsystem"));
+				}
+			}
+			else
+			{
+				UE_LOG(LogTemp, Warning, TEXT("AutoMap-> No Region Generators Found"));
+
+			}
+		}
+		
+	}
+	else
+	{
+		UE_LOG(LogTemp, Warning, TEXT("AutoMap-> No Maps Detected"));
 	}
 }
 #undef LOCTEXT_NAMESPACE

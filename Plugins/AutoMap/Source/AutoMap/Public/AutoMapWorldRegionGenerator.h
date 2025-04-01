@@ -32,12 +32,12 @@ public:
 	UPROPERTY(EditAnywhere, BlueprintReadWrite, Category="Auto Map - Pin Location", meta = (ClampMin="1", ClampMax="50", SliderMin="1", SliderMax="50"))
 	float PinSpawnDensity = 10;
 
+	void InitializeSpline(float SpawnRate);
+
 protected:
 	// Called when the game starts or when spawned
 	virtual void BeginPlay() override;
-
-	void InitializeSpline(float SpawnRate);
-
+	
 	TArray<AAutoMapPinBase*> SpawnedWorldRegionsPins;
 
 public:
