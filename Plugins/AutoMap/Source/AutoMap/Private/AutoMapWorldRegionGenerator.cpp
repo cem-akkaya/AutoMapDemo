@@ -23,8 +23,14 @@ AAutoMapWorldRegionGenerator::AAutoMapWorldRegionGenerator(const FObjectInitiali
 	RegionSplineComponent->SetHiddenInGame(true);
 	RegionSplineComponent->SetCollisionEnabled(ECollisionEnabled::NoCollision);
 	RegionSplineComponent->Duration = 100;
-	
-	InitializeSpline(PinSpawnDensity);
+	RegionSplineComponent->ClearSplinePoints(false);
+	RegionSplineComponent->AddSplinePointAtIndex(FVector(GetActorLocation() + FVector(-500, -500, 0)), 0, ESplineCoordinateSpace::World);
+	RegionSplineComponent->AddSplinePointAtIndex(FVector(GetActorLocation() + FVector(-500, 500, 0)), 1, ESplineCoordinateSpace::World);
+	RegionSplineComponent->AddSplinePointAtIndex(FVector(GetActorLocation() + FVector(500, 500, 0)), 2, ESplineCoordinateSpace::World);
+	RegionSplineComponent->AddSplinePointAtIndex(FVector(GetActorLocation() + FVector(500, -500, 0)), 3, ESplineCoordinateSpace::World);
+
+
+InitializeSpline(PinSpawnDensity);
 }
 
 #if WITH_EDITOR
