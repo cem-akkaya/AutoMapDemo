@@ -4,7 +4,6 @@
 #include "AutoMapSubsystem.h"
 
 #include "AutoMapBoundsActor.h"
-#include "Components/SplineComponent.h"
 #include "Kismet/GameplayStatics.h"
 #include "Kismet/KismetMathLibrary.h"
 
