@@ -16,6 +16,8 @@ This is an Unreal Engine experimental project with a contained plugin to generat
 Maps and maps in game can vary like in real life comes with their unique constraints and representations. AutoMaps uses traditional mapping techniques like slope mapping and voronoi mapping to generate maps.
 Auto Maps created for mid size levels and would work with even open world levels. However if your map need is open world you will need additional improvements in this plugin. especially with rendering stitched images and virtual texture loading.
 
+<img src="./Plugins/AutoMap/Content/Other/example2.gif" alt="Animated GIF" width="830"/>
+
 In its core, Auto Maps rely on pins to generate its coordinate system, borders, dynamic borders and look and feel on runtime. This also unlocks this plugin to detect region changes of player in realtime with integrate tracking system.
 Since its a contained system and not relying on anything else but itself it is very easy to extend this system into production quality map with regions, subregions etc.
 
@@ -61,14 +63,19 @@ If you want to contribute, feel free to create a pull request.
 
 <img src="https://media.githubusercontent.com/media/cem-akkaya/AutoMapDemo/master/Plugins/AutoMap/Content/Other/Explanation-4.png" alt="Animated GIF" width="830"/>
 - 
-- After you are done your map should look something like below.
+- After you are done your map should look something like above.
 - If you have conditions like map is not surrounded by water, its a cave map, underground map, its ok, you can still use this approach however images on umg is cut after a distance. That is defined in a material parameter collection named AutoMap_MPC, over there you can define cut off distance if there is any.
-- Spawn UMG widget included and map will be generated and represented. 
-- On UMG AutoMapBase_WGT use SetLightStatus to control day/night conditions of map if you need, you can also bind this to your time manager 0 and 1 being night and 0.5 being mid day. Colors of night conditions and day conditions for light colors and intensity are defined in function.
-- Processor always scans player position and region, when player passes to another region, change is detected in processor an event occurs. This event processed by an umg right now in demo to show region changes as proof of concept.
 
 <img src="./Plugins/AutoMap/Content/Other/example1.gif" alt="Animated GIF" width="830"/>
-- 
+
+- Spawn UMG widget included and map will be generated and represented. 
+- On UMG AutoMapBase_WGT use SetLightStatus to control day/night conditions of map if you need, you can also bind this to your time manager 0 and 1 being night and 0.5 being mid day. Colors of night conditions and day conditions for light colors and intensity are defined in function.
+
+
+<img src="./Plugins/AutoMap/Content/Other/example3.gif" alt="Animated GIF" width="830"/>
+
+- Processor always scans player position and region, when player passes to another region, change is detected in processor an event occurs. This event processed by an umg right now in demo to show region changes as proof of concept.
+
 ## Core Fundamentals
 <img src="https://media.githubusercontent.com/media/cem-akkaya/AutoMapDemo/master/Plugins/AutoMap/Content/Other/Explanation-5.png" alt="Animated GIF" width="830"/>
 
@@ -81,6 +88,12 @@ If you want to contribute, feel free to create a pull request.
 
 
 ## FAQ
+<details>
+<summary><b> Level terrain doesn't look same like images? </b></summary>
+
+>Terrain materials dynamic terrain is not included.
+</details>
+
 <details>
 <summary><b> Can I use with my own project? </b></summary>
 
